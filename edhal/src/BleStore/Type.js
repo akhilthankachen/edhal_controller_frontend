@@ -1,0 +1,2 @@
+export const CONNECTED = 'CONNECTED'
+export const BLE_STATE_CHANGE = 'BLE_STATE_CHANGE'

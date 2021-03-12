@@ -19,6 +19,7 @@
 		67E639BF36494BF4078A2528 /* libPods-edhal-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3646E46991ECEA0306876B99 /* libPods-edhal-tvOSTests.a */; };
 		7B2683DE7EE20F2333A10148 /* libPods-edhal-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F71C60EA8294DD2565505E0B /* libPods-edhal-tvOS.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
+		8DE7B9A525F8FC250044D417 /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DE7B9A425F8FC250044D417 /* File.swift */; };
 		BF8C5E0674761878D6ACAE96 /* libPods-edhal-edhalTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 455E53249DFF32AFC645EE55 /* libPods-edhal-edhalTests.a */; };
 /* End PBXBuildFile section */
 
@@ -62,6 +63,8 @@
 		568D1DC6048BC4F82120E613 /* Pods-edhal-edhalTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-edhal-edhalTests.release.xcconfig"; path = "Target Support Files/Pods-edhal-edhalTests/Pods-edhal-edhalTests.release.xcconfig"; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = edhal/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		82C881E5A0DF09E6F0DBC146 /* Pods-edhal.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-edhal.debug.xcconfig"; path = "Target Support Files/Pods-edhal/Pods-edhal.debug.xcconfig"; sourceTree = "<group>"; };
+		8DE7B9A325F8FC240044D417 /* edhal-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "edhal-Bridging-Header.h"; sourceTree = "<group>"; };
+		8DE7B9A425F8FC250044D417 /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
 		9DE58E9C409900C02963B27C /* Pods-edhal-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-edhal-tvOSTests.release.xcconfig"; path = "Target Support Files/Pods-edhal-tvOSTests/Pods-edhal-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
 		CA832340302E144E61603D0C /* Pods-edhal-edhalTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-edhal-edhalTests.debug.xcconfig"; path = "Target Support Files/Pods-edhal-edhalTests/Pods-edhal-edhalTests.debug.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
@@ -161,7 +164,6 @@
 				03F4E749F3E63A931A5F0054 /* Pods-edhal-tvOSTests.debug.xcconfig */,
 				9DE58E9C409900C02963B27C /* Pods-edhal-tvOSTests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -175,12 +177,14 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				8DE7B9A425F8FC250044D417 /* File.swift */,
 				13B07FAE1A68108700A75B9A /* edhal */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* edhalTests */,
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				6CED8B28919D5A3497B3432E /* Pods */,
+				8DE7B9A325F8FC240044D417 /* edhal-Bridging-Header.h */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -294,7 +298,7 @@
 						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
 					13B07F861A680F5B00A75B9A = {
-						LastSwiftMigration = 1120;
+						LastSwiftMigration = 1130;
 					};
 					2D02E47A1E0B4A5D006451C7 = {
 						CreatedOnToolsVersion = 8.2.1;
@@ -569,6 +573,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
+				8DE7B9A525F8FC250044D417 /* File.swift in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -610,6 +615,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = CA832340302E144E61603D0C /* Pods-edhal-edhalTests.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -633,6 +639,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 568D1DC6048BC4F82120E613 /* Pods-edhal-edhalTests.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
 				INFOPLIST_FILE = edhalTests/Info.plist;
@@ -666,6 +673,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = edhal;
+				SWIFT_OBJC_BRIDGING_HEADER = "edhal-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -679,6 +687,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = edhal/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
@@ -688,6 +697,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = edhal;
+				SWIFT_OBJC_BRIDGING_HEADER = "edhal-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
