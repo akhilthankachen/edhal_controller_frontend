@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Text, View, StyleSheet } from 'react-native'
+import { Text, View, StyleSheet, Image, BackHandler } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
@@ -13,22 +13,45 @@ class ConnectDeviceBle extends Component {
         }
     }
 
+    componentDidMount = () => {
+        // prevent pressing back button
+        this.preventBackListner = this.props.navigation.addListener('beforeRemove', (e)=>{
+            e.preventDefault()
+            BackHandler.exitApp()
+        })
+    }
+
+    componentWillUnmount = () => {
+        this.preventBackListner()
+    }
+
     render() {
-        console.log(this.props.Ble.bleState)
         return (
             <SafeAreaView style={styles.container}>
+
                 <View>
                     <Text style={styles.heading}>Lets get you started</Text>
                 </View>
-                <View style={styles.enableBleSection}>
-                    <Text style={styles.enableBleSectionText}>
-                        Turn your Bluetooth on, to
-                        connect your controller
-                    </Text>
-                </View>
+
+                {this.props.Ble.bleState != 'PoweredOn' &&
+                    <View style={styles.enableBleSection}>
+                        <Text style={styles.enableBleSectionText}>
+                            Turn your Bluetooth on, to
+                            connect your controller
+                        </Text>
+                    </View>
+                }
+
+                {this.props.Ble.bleState == 'PoweredOn' && 
+                    <View style={styles.searchSection}>
+                        <Image source={require('../assets/images/searching.png')}></Image>
+                        <Text style={styles.searchText}>Searching...</Text>
+                    </View>
+                }
                 <View style={styles.nextButton}>
                     <ButtonSmall text={"NEXT >"} enabled={false}/>
                 </View>
+
             </SafeAreaView>
         )
     }
@@ -68,5 +91,14 @@ const styles = StyleSheet.create({
     },
     nextButton: {
         alignItems: 'flex-end',
+    },
+    searchSection: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    searchText: {
+        color: '#6F7474',
+        fontSize: 30
     }
 })
