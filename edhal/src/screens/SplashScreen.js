@@ -15,7 +15,12 @@ class SplashScreen extends Component {
     }
 
     componentDidMount = ()=>{
-        setTimeout(() => { this.props.navigation.navigate("ConnectDeviceBle")}, 500)
+        if(this.props.Devices.devices.length != 0){
+            console.log('hello')
+            setTimeout(() => { this.props.navigation.navigate("Dashboard")}, 500)
+        }else{
+            setTimeout(() => { this.props.navigation.navigate("ConnectDeviceBle")}, 500)
+        }
     }
 
     render() {
@@ -35,9 +40,14 @@ class SplashScreen extends Component {
 
 SplashScreen.propTypes = {
     getBleState: PropTypes.func.isRequired,
+    Devices: PropTypes.object.isRequired
 }
 
-export default connect(null, { getBleState })(SplashScreen)
+const mapStateToProps = state =>({
+    Devices: state.Devices
+})
+
+export default connect(mapStateToProps, { getBleState })(SplashScreen)
 
 const styles = StyleSheet.create({
     container: {

@@ -8,6 +8,8 @@ import store from './src/store'
 // screens
 import ConnectDeviceBle from './src/screens/ConnectDeviceBle';
 import SplashScreen from './src/screens/SplashScreen';
+import DeviceConfig from './src/screens/DeviceConfig';
+import Dashboard from './src/screens/Dashboard';
 
 // navigators
 const rootStack = createStackNavigator()
@@ -29,6 +31,20 @@ export default function App() {
             <rootStack.Screen 
               name="ConnectDeviceBle" 
               component={ConnectDeviceBle} 
+              options={{
+                headerShown: false
+              }}
+            />
+            <rootStack.Screen 
+              name="DeviceConfig" 
+              component={DeviceConfig} 
+              options={{
+                headerShown: false
+              }}
+            />
+            <rootStack.Screen 
+              name="Dashboard" 
+              component={Dashboard} 
               options={{
                 headerShown: false
               }}

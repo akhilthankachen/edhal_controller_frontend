@@ -12,7 +12,7 @@ export default class ButtonSmall extends Component {
   render() {
     if(this.props.enabled){
         return (
-            <TouchableOpacity style={styles.button}>
+            <TouchableOpacity style={styles.button} onPress={this.props.onPress}>
                 <Text style={styles.buttonText}>
                     {this.state.buttonText}
                 </Text>

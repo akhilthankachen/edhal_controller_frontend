@@ -48,7 +48,7 @@ export const getAvailableDevices = () => (dispatch, getState) => {
             name: device.name
         }
 
-        // checkif device already added to lists
+        // check if device already added to available list
         var availableDevices = getState().Ble.availableDevices
         var exists = false
         for(var i = 0; i<availableDevices.length; i++){
@@ -58,8 +58,18 @@ export const getAvailableDevices = () => (dispatch, getState) => {
             }
         }
 
+        // check if device already connected
+        var connectedDevices = getState().Devices.devices
+        var connected = false
+        for(var i = 0; i<connectedDevices.length; i++){
+            let tempJson = connectedDevices[i]
+            if(tempJson.name === device.name && tempJson.id === device.id){
+                connected = true
+            }
+        }
+
         // if does not exists add to the list
-        if(!exists){
+        if(!exists && !connected){
             // add device to the available devices
             
             availableDevices.push(deviceJson)
@@ -85,6 +95,12 @@ export const clearScan = () => (dispatch, getState) =>{
     // cancel connection first
     if(getState().Ble.connected === true){
         manager.cancelDeviceConnection(getState().Ble.connectedDevice.id).then((device)=>{
+            dispatch({
+                type: DEVICE_DISCONNECTED
+            })
+        }).catch((error)=>{
+            console.warn(error)
+            // not connected, so clear the connection
             dispatch({
                 type: DEVICE_DISCONNECTED
             })
@@ -185,6 +201,12 @@ export const connectDevice = (deviceId) => (dispatch, getState) => {
     if(getState().Ble.connected){
         // cancel connection first
         manager.cancelDeviceConnection(getState().Ble.connectedDevice.id).then((device)=>{
+            dispatch({
+                type: DEVICE_DISCONNECTED
+            })
+            connectToDevice(deviceId, dispatch)
+        }).catch((error)=>{
+            // this also means not connected, so clear the connection and reconnect
             dispatch({
                 type: DEVICE_DISCONNECTED
             })

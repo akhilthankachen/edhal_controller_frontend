@@ -119,12 +119,18 @@ class ConnectDeviceBle extends Component {
         this.props.getAvailableDevices()
     }
 
+    // render list of available bluetooth devices
     renderAvailableDevices = () => {
         if(this.props.Ble.availableDevices.length > 0){
             return this.props.Ble.availableDevices.map((element, key)=>(
                 <ListBleDevice name={element.name} id={element.id} key={key}/>
             ))
         }
+    }
+    
+    // on press next button
+    onPressNext = () => {
+        this.props.navigation.navigate('DeviceConfig')
     }
 
     render() {
@@ -181,7 +187,7 @@ class ConnectDeviceBle extends Component {
                 }
                 {this.props.Ble.connected &&
                     <View style={styles.nextButton}>
-                        <ButtonSmall text={"NEXT >"} enabled={true}/>
+                        <ButtonSmall text={"NEXT >"} enabled={true} onPress={this.onPressNext}/>
                     </View>
                 }
 
