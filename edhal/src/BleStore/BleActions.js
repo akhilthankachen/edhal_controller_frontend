@@ -10,6 +10,11 @@ import {
 import { BleManager } from 'react-native-ble-plx';
 import base64 from 'react-native-base64'
 
+// services and characteristics
+const SERVICE_UUID_SENSOR = "0084cec8-e46c-484a-975a-b2534cfb0674"
+const CHARACTERISTIC_UUID_BME_DATA = "a72f65f8-9166-403e-b4b1-8a351e716dae"
+
+
 var manager = new BleManager()
 
 export const getBleState = () => (dispatch,getState) => {
@@ -69,7 +74,7 @@ export const getAvailableDevices = () => (dispatch, getState) => {
         }
 
         // if does not exists add to the list
-        if(!exists && !connected){
+        if(!exists ){
             // add device to the available devices
             
             availableDevices.push(deviceJson)
@@ -99,13 +104,20 @@ export const clearScan = () => (dispatch, getState) =>{
                 type: DEVICE_DISCONNECTED
             })
         }).catch((error)=>{
-            console.warn(error)
             // not connected, so clear the connection
             dispatch({
                 type: DEVICE_DISCONNECTED
             })
+            console.warn(error)
         })
     }
+    // clear all the cnnecting device
+    dispatch({
+        type: DEVICE_CONNECTING,
+        connecting: false,
+        connectingDeviceId: ''
+    })
+    // clear all the available devices
     dispatch({
         type: CLEAR_AVAILABlE_DEVICES
     })
@@ -147,6 +159,7 @@ discoverAllServicesAndCharacteristics = async (device) => {
     // discover
     const services = await device.discoverAllServicesAndCharacteristics()
     const characteristic = await getServicesAndCharacteristics(services)
+
 }
 
 connectToDevice = (deviceId, dispatch) => {
@@ -157,15 +170,14 @@ connectToDevice = (deviceId, dispatch) => {
     })
 
     // connect to a device
-    manager.connectToDevice(deviceId)
+    manager.connectToDevice(deviceId, {requestMTU: 512})
     .then((device) => {
         return device.discoverAllServicesAndCharacteristics()
     })
     .then((device) => {
-        // discover all the services and characteristics
         discoverAllServicesAndCharacteristics(device)
         .catch((error)=>{
-            console.log(error)
+
         })
 
         // device connected 
@@ -187,6 +199,11 @@ connectToDevice = (deviceId, dispatch) => {
     .catch((error) => {
         // Handle errors
         console.log(error)
+        dispatch({
+            type: DEVICE_CONNECTING,
+            connecting: false,
+            deviceId: ''
+        })
     })
 }
 
@@ -215,4 +232,27 @@ export const connectDevice = (deviceId) => (dispatch, getState) => {
     }else{
         connectToDevice(deviceId, dispatch)
     }
+}
+
+// get sensor data 
+export const getSensorData = ()=> (dispatch,getState)=>{
+    console.log("getting sensor data")
+    manager.readCharacteristicForDevice(getState().Ble.connectedDevice.id,SERVICE_UUID_SENSOR, CHARACTERISTIC_UUID_BME_DATA).then((characteristic)=>{
+        var value = base64.decode(characteristic.value)
+        var obj = JSON.parse(value)
+        console.log(value)
+        var sensorData = {
+            temperature: Math.round(obj.t),
+            humidity: Math.round(obj.h),
+            pressure: obj.p,
+            altitude: obj.a
+        }
+        dispatch({
+            type: "SENSORDATA",
+            sensorData: sensorData
+        })
+    }).catch((error)=>{
+
+        console.warn(error)
+    })
 }

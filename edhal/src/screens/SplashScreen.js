@@ -16,7 +16,6 @@ class SplashScreen extends Component {
 
     componentDidMount = ()=>{
         if(this.props.Devices.devices.length != 0){
-            console.log('hello')
             setTimeout(() => { this.props.navigation.navigate("Dashboard")}, 500)
         }else{
             setTimeout(() => { this.props.navigation.navigate("ConnectDeviceBle")}, 500)

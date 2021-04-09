@@ -16,7 +16,13 @@ const initialState = {
     connectedDevice: {},
     availableDevices: [],
     bleState: '',
-    scanning: false
+    scanning: false,
+    sensorData: {
+        temperature: 27,
+        humidity: 70,
+        pressure: 1024,
+        altitude: 20
+    }
 }
 
 export default function(state = initialState, action) {
@@ -58,10 +64,7 @@ export default function(state = initialState, action) {
         }
         case "SENSORDATA": return {
             ...state,
-            temperature: action.temperature,
-            humidity: action.humidity,
-            pressure: action.pressure,
-            altitude: action.altitude
+            sensorData: action.sensorData
         }
 
         default : return state

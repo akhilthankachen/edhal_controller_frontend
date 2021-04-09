@@ -10,9 +10,28 @@ import ConnectDeviceBle from './src/screens/ConnectDeviceBle';
 import SplashScreen from './src/screens/SplashScreen';
 import DeviceConfig from './src/screens/DeviceConfig';
 import Dashboard from './src/screens/Dashboard';
+import SelectPheripheral from './src/screens/SelectPheripheral';
+
+// custom header
+import CustomHeaderAddPeripheral from './src/components/CustomHeaderAddPeripheral'
 
 // navigators
 const rootStack = createStackNavigator()
+const peripheralStack = createStackNavigator()
+
+function AddPeripheral() {
+  return(
+    <peripheralStack.Navigator>
+      <peripheralStack.Screen
+        name="SelectPeripheral"
+        component={SelectPheripheral}
+        options={{
+          headerShown: false
+        }}
+      />
+    </peripheralStack.Navigator>
+  )
+}
 
 
 export default function App() {
@@ -47,6 +66,17 @@ export default function App() {
               component={Dashboard} 
               options={{
                 headerShown: false
+              }}
+            />
+            <rootStack.Screen
+              name="AddPeripheral"
+              component={AddPeripheral}
+              options={{
+                header: ({ scene, previous, navigation }) => {
+                  return (
+                    <CustomHeaderAddPeripheral navigation={navigation}/>
+                  )
+                }
               }}
             />
           </rootStack.Navigator>
